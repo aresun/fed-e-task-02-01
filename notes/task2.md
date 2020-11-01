@@ -10,14 +10,15 @@
 
 - install
   - `yarn global add yo`
-  - `yarn blobal add generator-node` for node project, node generator
+  - `yarn global add generator-node` for node project, node generator
+- usage
   - `yo node`
-    - sub generator
-      - cli 应用
-        - `yo node:cli`
-        - `yarn link`
-        - `yarn`
-        - `module_name --help` run created cli app
+- sub generator
+    - cli 应用
+      - `yo node:cli`
+      - `yarn` // install dependencies
+      - `yarn link` // link globally
+      - `module_name --help` run created cli app
 
 ### yeoman work flow
 
@@ -51,7 +52,13 @@
   - `cd generator-gName`
   - `yarn init`
   - `yarn add yeoman-generator` // base generator for other generator; provide tools function for creating generator
+  - edit code-0
+  - `yarn link`, // 使之成为全局 模块包
+  - `$ mkdir project-name`
+  - `$ cd project-name/`
+  - `$ yo gName` // use gName generator in this project
 
+**code-0**
 ```javascript
 // app/index.js
 
@@ -142,11 +149,6 @@ module.exports = class extends Generator {
 };
 ```
 
-- `yarn link`, // 使之成为全局 模块包
-- `$ mkdir project-name`
-- `$ cd project-name/`
-- `$ yo gName` // use gName generator in this project
-
 ### vue-generator
 
 ```javascript
@@ -219,8 +221,12 @@ module.exports = class extends Generator {
 
 - basic usage
   - `yarn add plop --dev`
-  - `plop-templates/` // to store templates files for plop
-
+  - `plop-templates/` // to store templates files for plop (`code-1`)
+  - `plopfile.js` // plop entry file(`code-2`)
+- to use customized plop generator
+  - `yarn plop component` // use `component` generator defined in `plopfile.js` at project root directory
+***
+**code-1: templates**
 ```css
 /* component.css.hbs */
 .{{name}} {
@@ -251,9 +257,8 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 ```
-
-- `plopfile.js` // plop entry file
-
+***
+**code-2: plop entry**
 ```javascript
 // Plop 入口文件，需要导出一个函数
 // 此函数接收一个 plop 对象，用于创建生成器任务
@@ -291,9 +296,6 @@ module.exports = (plop) => {
   });
 };
 ```
-
-- to use customized plop generator
-  - `yarn plop component` // use `component` generator defined in `plopfile.js` at project root directory
 
 ## scarffold theory
 
